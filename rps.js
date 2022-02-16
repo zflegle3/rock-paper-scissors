@@ -62,13 +62,6 @@ function playRps(playerSelect,compSelect) {
     }
 }
 
-//Test Cases
-//const playerSelection = "rock"
-//const compSelection = computerPlay()
-//console.log(playRps(playerSelection,compSelection));
-
-
-
 //Button Functionality
 const outputContent = document.querySelector(".output");
 console.log(outputContent);

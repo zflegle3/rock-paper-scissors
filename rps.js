@@ -5,29 +5,60 @@ function computerPlay() {
     return options[rand];
 }
 
+function keepScore(bool) {
+    if (bool === true) {
+        let score = document.querySelector(".user-score");
+        score.textContent = Number(score.textContent) + 1;
+        console.log(score);
+    }
+    else {
+        let score = document.querySelector(".comp-score");
+        score.textContent = Number(score.textContent) + 1;
+        console.log(score);
+    }
+}
+
+function checkScore() {
+    if (Number(document.querySelector(".user-score").textContent) >= 5 || Number(document.querySelector(".comp-score").textContent) >= 5) {
+        return false;
+    }
+    else {
+        return true;
+    }
+}
+
 function playRps(playerSelect,compSelect) {
+    //Check Score before playing
+    if (checkScore() === false) {
+        let userScore = document.querySelector(".user-score").textContent;
+        let compScore = document.querySelector(".comp-score").textContent
+        outputContent.textContent = `The game is over, Your score is ${userScore} and your opponent's score is ${compScore}. Refresh the page to play again.`
+        return
+    }
     //Initialize all inputs to lowercase strings for comparing
     player = playerSelect.toLowerCase();
     comp = compSelect.toLowerCase();
     //If Statement to compare strings
     if (player === comp) {
-
-        return `You tied, You played ${player} and your opponent played ${comp}.`;
+        outputContent.textContent = `You tied, You played ${player} and your opponent played ${comp}.`;
     }
     //lose cases checked next
     else if (player === "scissors" && comp === "rock") {
-        return `Sorry you lose, You played ${player} and your opponent played ${comp}.`;
+        outputContent.textContent = `Sorry you lose, You played ${player} and your opponent played ${comp}.`;
+        keepScore(false);
     }
     else if (player === "rock" && comp === "paper") {
-        return `Sorry you lose, You played ${player} and your opponent played ${comp}.`;
+        outputContent.textContent = `Sorry you lose, You played ${player} and your opponent played ${comp}.`;
+        keepScore(false);
     }
     else if (player === "paper" && comp === "scissors") {
-        return `Sorry you lose, You played ${player} and your opponent played ${comp}.`;
+        outputContent.textContent = `Sorry you lose, You played ${player} and your opponent played ${comp}.`;
+        keepScore(false);
     }
     //win cases assumed if no tie or loss
     else {
-        return `Congrats you win! You played ${player} and your opponent played ${comp}.`;
-
+        outputContent.textContent = `Congrats you win! You played ${player} and your opponent played ${comp}.`;
+        keepScore(true);
     }
 }
 
@@ -37,27 +68,20 @@ function playRps(playerSelect,compSelect) {
 //console.log(playRps(playerSelection,compSelection));
 
 
-function game() {
-    let playerScore = 0;
-    let compScore = 0;
 
-    for (let i = 0; i < 5; i++) {
-        let playerSelection = prompt("Please enter your selection between 'rock', 'paper', and 'scissors'.");
-        let result = playRps(playerSelection, computerPlay()) ;
-        console.log(result);
-        //checking result substring & updating score
-        if (result.includes('win')) {
-            playerScore = ++playerScore;
-        }
-        else if (result.includes('lose')) {
-            compScore = ++compScore;
-        }
-        //No score update in case of a tie;
-        //Output Score 
-        console.log(`It is currently round ${i+1} and the score is You: ${playerScore} Computer: ${compScore}.`)
-    }
+//Button Functionality
+const outputContent = document.querySelector(".output");
+console.log(outputContent);
 
-
-}
-
-game()
+//Rock
+document.querySelector(".rock").addEventListener("click", (e) => {
+    console.log(playRps("rock", computerPlay()));
+});
+//Paper
+document.querySelector(".paper").addEventListener("click", (e) => {
+    console.log(playRps("paper", computerPlay()));
+});
+//Scissors
+document.querySelector(".scissors").addEventListener("click", (e) => {
+    console.log(playRps("scissors", computerPlay()));
+});
